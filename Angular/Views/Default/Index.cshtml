@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-app="testModule">
+
+    <div ng-controller="MainController">
+
+
+        <p class="lead">Message: {{message}}</p>
+
+        <div>
+            <form name="searchUser" ng-submit="search(userName)">
+                <input type="text" placeholder="Username to search" ng-model="userName" />
+                <input type="submit" value="search" />
+            </form>
+        </div>
+
+        <div ng-show="user">
+            <h1>{{user.name}}</h1>
+            <img ng-src="{{user.avatar_url}}" title="{{user.name}}" />
+        </div>
+
+        <div ng-show="repos">
+            Order:
+            <select ng-model="repoSortOrder">
+                <option value="+name">Name</option>
+                <option value="-stargazers_count">Stars</option>
+                <option value="+language">Language</option>
+            </select>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Stars
+                        </th>
+                        <th>
+                            Language
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="repo in repos |orderBy:repoSortOrder|limitTo:15 ">
+                        <td>
+                            {{repo.name}}
+                        </td>
+                        <td>
+                            {{repo.stargazers_count | number}}
+                        </td>
+                        <td>
+                            {{repo.language}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
